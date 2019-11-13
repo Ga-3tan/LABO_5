@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <limits>
+#include <iomanip>
 
 using namespace std;
 
@@ -31,9 +32,29 @@ const string MOIS[NB_MOIS] = {"Janvier", "Fevrier", "Mars", "Avril",
                               "Mai", "Juin", "Juillet", "Aout", "Septembre",
                               "Octobre", "Novembre", "Decembre"};
 
-int annee = 0;
+int annee = 2015;
 int jour;
 
+void displayOneMonth(int month) {
+    cout << setw(int((21 - MOIS[month].length())/2) + MOIS[month].length()) << MOIS[month] << endl;
+    for (int i = 0; i < NB_JOURS_SEMAINE; i++) {
+        cout << setw(3) << JOURS_SEMAINE[i];
+    }
+    for (int k = 0; k < 6; k++) {
+        cout << endl;
+        for (int j = 0; j < NB_JOURS_SEMAINE; j++) {
+            cout << setw(3) << /*jour*/ "OO";
+        }
+    }
+}
+void display() {
+    cout << setw(12) << annee << endl
+    << setw(21) << setfill(' ') << endl;
+    for(int i = 0; i < NB_MOIS; i++) {
+        displayOneMonth(i);
+        cout << endl;
+    }
+}
 int dayOfTheYear(int day, int month, int year) {
     if (month == 1 || month == 2) {
         month += 12;
@@ -58,34 +79,35 @@ void clearCin() {
 }
 
 int main() {
-    bool valid = false;
-    do {
-        cout << "Quelle annee voulez-vous afficher? (1600-3000) ";
-        cin >> annee;
-        if (cin.fail()) {
-            clearCin();
-        }
-        if (annee < 1600 || annee > 3000) {
-            cout << "Entree non valide" << endl;
-            clearCin();
-        } else {
-            valid = true;
-        }
-    } while (!valid);
-    valid = false;
-    do {
-        cout << "Quel jour de la semaine est le lundi? (1-7)";
-        cin >> jour;
-        if (cin.fail()) {
-            clearCin();
-        }
-        if (jour <= 0 || jour > 7) {
-            cout << "Entree non valide" << endl;
-            clearCin();
-        } else {
-            valid = true;
-        }
-    } while (!valid);
-    cout << dayOfTheYear(1, 1, 2015);
+//    bool valid = false;
+//    do {
+//        cout << "Quelle annee voulez-vous afficher? (1600-3000) ";
+//        cin >> annee;
+//        if (cin.fail()) {
+//            clearCin();
+//        }
+//        if (annee < 1600 || annee > 3000) {
+//            cout << "Entree non valide" << endl;
+//            clearCin();
+//        } else {
+//            valid = true;
+//        }
+//    } while (!valid);
+//    valid = false;
+//    do {
+//        cout << "Quel jour de la semaine est le lundi? (1-7)";
+//        cin >> jour;
+//        if (cin.fail()) {
+//            clearCin();
+//        }
+//        if (jour <= 0 || jour > 7) {
+//            cout << "Entree non valide" << endl;
+//            clearCin();
+//        } else {
+//            valid = true;
+//        }
+//    } while (!valid);
+//    cout << dayOfTheYear(1, 1, 2015);
+    display();
     return 0;
 }
