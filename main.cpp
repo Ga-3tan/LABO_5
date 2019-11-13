@@ -1,3 +1,17 @@
+/* ---------------------------
+ Laboratoire : 05
+ Fichier :     main.cpp
+ Auteur(s) :   Samy Ould Ahmed, Gaétan Zwick, Jonathan Stocchetti
+ Date :        12.11.2019
+
+ But :         Afficher un calendrier annuaire selon le choix de l'année par l'utilisateur.
+                L'utilisateur peut également choisir un décalage pour afficher le lundi autre part que tout à gauche.
+
+ Remarque(s) :
+
+ Compilateur :  MinGW-g++ 6.3.0
+ --------------------------- */
+
 #include <iostream>
 #include <limits>
 
