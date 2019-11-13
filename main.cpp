@@ -64,6 +64,7 @@ bool verifEntry(string message, int valueMin, int valueMax)
 	if (cin.fail()) {
 		clearCin();
 	}
+
 	if (annee < valueMin || annee > valueMax) {
 		cout << "Entree non valide" << endl;
 		clearCin();
@@ -75,25 +76,29 @@ bool verifEntry(string message, int valueMin, int valueMax)
 }
 
 int main() {
-    bool valid = false;
+    /////////////////////////////////////// Constantes ////////////////////////////////////////////////
 	const int JOUR_MINIMUM = 1;
-	;
 	const string MESSAGE_ENTREE_ANNEE = "Quelle annee voulez-vous afficher? (1600 - 3000)";
 	const string MESSAGE_ENTREE_JOUR = "Quel jour de la semaine est le lundi ? (1 - 7)";
-	for (int i = 1; i <= 2; i++)
+	/////////////////////////////////////// Variables ////////////////////////////////////////////////
+	bool valid;
+	///////////////////////////////////////// Code //////////////////////////////////////////////////
+	for (int demandeEntree = 1; demandeEntree <= 2; demandeEntree++)
 	{
 		do {
-			if (i == 1)
+			switch (demandeEntree)
 			{
+			case 1: 
 				valid = verifEntry(MESSAGE_ENTREE_ANNEE, MIN_ANNEE, MAX_ANNEE);
-			}
-			else {
+				continue;
+			case 2:
 				valid = verifEntry(MESSAGE_ENTREE_JOUR, JOUR_MINIMUM, NB_JOURS_SEMAINE);
+				continue;
 			}
 		} while (!valid);
 	}
-    valid = false;
     
+	// TEST A SUPPRIMER !
 	cout << "Jour du 1.1.2015" << dayOfTheYear(1, 1, 2015);
     return 0;
 }
