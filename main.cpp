@@ -57,35 +57,43 @@ void clearCin() {
     cin.ignore(numeric_limits<streamsize>::max(),'\n');
 }
 
+bool verifEntry(string message, int valueMin, int valueMax)
+{
+	cout << message;
+	cin >> annee;
+	if (cin.fail()) {
+		clearCin();
+	}
+	if (annee < valueMin || annee > valueMax) {
+		cout << "Entree non valide" << endl;
+		clearCin();
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
 int main() {
     bool valid = false;
-    do {
-        cout << "Quelle annee voulez-vous afficher? (1600-3000) ";
-        cin >> annee;
-        if (cin.fail()) {
-            clearCin();
-        }
-        if (annee < 1600 || annee > 3000) {
-            cout << "Entree non valide" << endl;
-            clearCin();
-        } else {
-            valid = true;
-        }
-    } while (!valid);
+	const int JOUR_MINIMUM = 1;
+	;
+	const string MESSAGE_ENTREE_ANNEE = "Quelle annee voulez-vous afficher? (1600 - 3000)";
+	const string MESSAGE_ENTREE_JOUR = "Quel jour de la semaine est le lundi ? (1 - 7)";
+	for (int i = 1; i <= 2; i++)
+	{
+		do {
+			if (i == 1)
+			{
+				valid = verifEntry(MESSAGE_ENTREE_ANNEE, MIN_ANNEE, MAX_ANNEE);
+			}
+			else {
+				valid = verifEntry(MESSAGE_ENTREE_JOUR, JOUR_MINIMUM, NB_JOURS_SEMAINE);
+			}
+		} while (!valid);
+	}
     valid = false;
-    do {
-        cout << "Quel jour de la semaine est le lundi? (1-7)";
-        cin >> jour;
-        if (cin.fail()) {
-            clearCin();
-        }
-        if (jour <= 0 || jour > 7) {
-            cout << "Entree non valide" << endl;
-            clearCin();
-        } else {
-            valid = true;
-        }
-    } while (!valid);
-    cout << dayOfTheYear(1, 1, 2015);
+    
+	cout << "Jour du 1.1.2015" << dayOfTheYear(1, 1, 2015);
     return 0;
 }
