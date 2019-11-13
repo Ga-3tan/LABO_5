@@ -89,5 +89,3 @@ int main() {
     cout << dayOfTheYear(1, 1, 2015);
     return 0;
 }
-
-// Je test juste de push
