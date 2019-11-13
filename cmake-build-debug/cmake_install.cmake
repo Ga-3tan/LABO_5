@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/gaeta/Documents/HEIGVD/INF1/LABO_5
+# Install script for directory: D:/HEIG-VD/INF1/LABO_5
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/gaeta/Documents/HEIGVD/INF1/LABO_5/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/HEIG-VD/INF1/LABO_5/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
