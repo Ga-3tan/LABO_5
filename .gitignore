@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+/out/build/x64-Debug/.cmake/api/v1/reply/cache-v2-a84639b30dd7f6b67449.json
+/out/build/x64-Debug/.cmake/api/v1/reply
+/out/build/x64-Debug
+/.vs

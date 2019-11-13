@@ -79,35 +79,35 @@ void clearCin() {
 }
 
 int main() {
-//    bool valid = false;
-//    do {
-//        cout << "Quelle annee voulez-vous afficher? (1600-3000) ";
-//        cin >> annee;
-//        if (cin.fail()) {
-//            clearCin();
-//        }
-//        if (annee < 1600 || annee > 3000) {
-//            cout << "Entree non valide" << endl;
-//            clearCin();
-//        } else {
-//            valid = true;
-//        }
-//    } while (!valid);
-//    valid = false;
-//    do {
-//        cout << "Quel jour de la semaine est le lundi? (1-7)";
-//        cin >> jour;
-//        if (cin.fail()) {
-//            clearCin();
-//        }
-//        if (jour <= 0 || jour > 7) {
-//            cout << "Entree non valide" << endl;
-//            clearCin();
-//        } else {
-//            valid = true;
-//        }
-//    } while (!valid);
-//    cout << dayOfTheYear(1, 1, 2015);
+    bool valid = false;
+    do {
+        cout << "Quelle annee voulez-vous afficher? (1600-3000) ";
+        cin >> annee;
+        if (cin.fail()) {
+            clearCin();
+        }
+        if (annee < 1600 || annee > 3000) {
+            cout << "Entree non valide" << endl;
+            clearCin();
+        } else {
+            valid = true;
+        }
+    } while (!valid);
+    valid = false;
+    do {
+        cout << "Quel jour de la semaine est le lundi? (1-7)";
+        cin >> jour;
+        if (cin.fail()) {
+            clearCin();
+        }
+        if (jour <= 0 || jour > 7) {
+            cout << "Entree non valide" << endl;
+            clearCin();
+        } else {
+            valid = true;
+        }
+    } while (!valid);
+    cout << dayOfTheYear(1, 1, 2015);
     display();
     return 0;
 }
