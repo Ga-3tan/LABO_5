@@ -20,6 +20,24 @@ const string MOIS[NB_MOIS] = {"Janvier", "Fevrier", "Mars", "Avril",
 int annee = 0;
 int jour;
 
+int dayOfTheYear(int day, int month, int year) {
+    if (month == 1 || month == 2) {
+        month += 12;
+        --year;
+    }
+    return (day + 2 * month + int(3 * (month + 1) / 5) + year + int(year / 4) - (year / 100) + int(year / 400) + 2) % 7;
+}
+
+bool isBis() {
+    if (annee % 4 != 0) {
+        return false;
+    } else if (annee % 100 != 0) {
+        return true;
+    } else {
+        return (annee % 400 == 0);
+    }
+}
+
 void clearCin() {
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(),'\n');
@@ -28,7 +46,7 @@ void clearCin() {
 int main() {
     bool valid = false;
     do {
-        cout << "Quelle annee voulez-vous afficher? (1600-3000) " << endl;
+        cout << "Quelle annee voulez-vous afficher? (1600-3000) ";
         cin >> annee;
         if (cin.fail()) {
             clearCin();
@@ -42,7 +60,7 @@ int main() {
     } while (!valid);
     valid = false;
     do {
-        cout << "Quel jour de la semaine est le lundi? (1-7)" << endl;
+        cout << "Quel jour de la semaine est le lundi? (1-7)";
         cin >> jour;
         if (cin.fail()) {
             clearCin();
@@ -54,5 +72,6 @@ int main() {
             valid = true;
         }
     } while (!valid);
+    cout << dayOfTheYear(1, 1, 2015);
     return 0;
 }
