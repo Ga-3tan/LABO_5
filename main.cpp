@@ -49,6 +49,10 @@ bool isBis() {
 
 void displayOneMonth(int month, int nbJourVide) {
 	int decalage = (nbJourVide + jour-1) % 7;
+	if (decalage < 0)
+	{
+		decalage +=7;
+	}
 	int nombreJourDuMois = MOIS_31;
     int center = int((21 - MOIS[month].length())/2) + MOIS[month].length();
 
@@ -163,8 +167,8 @@ bool verifEntry(int variable, int valueMin, int valueMax)
 int main() {
     /////////////////////////////////////// Constantes ////////////////////////////////////////////////
     const int JOUR_MINIMUM = 1;
-    const string MESSAGE_ENTREE_ANNEE = "Quelle annee voulez-vous afficher? (1600 - 3000)";
-    const string MESSAGE_ENTREE_JOUR = "Quel jour de la semaine est le lundi ? (1 - 7)";
+    const string MESSAGE_ENTREE_ANNEE = "Quelle annee voulez-vous afficher? (1600-3000) ";
+    const string MESSAGE_ENTREE_JOUR = "Quel jour de la semaine est le lundi? (1-7) ";
     /////////////////////////////////////// Variables ////////////////////////////////////////////////
     bool valid;
     ///////////////////////////////////////// Code //////////////////////////////////////////////////
@@ -186,6 +190,7 @@ int main() {
             }
         } while (!valid);
     }
+	cout << endl;
     display();
     return 0;
 }
