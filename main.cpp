@@ -78,15 +78,14 @@ void clearCin() {
     cin.ignore(numeric_limits<streamsize>::max(),'\n');
 }
 
-bool verifEntry(string message, int valueMin, int valueMax)
+bool verifEntry(int variable, int valueMin, int valueMax)
 {
-    cout << message;
-    cin >> annee;
+    
     if (cin.fail()) {
         clearCin();
     }
 
-    if (annee < valueMin || annee > valueMax) {
+    if (variable < valueMin || variable > valueMax) {
         cout << "Entree non valide" << endl;
         clearCin();
         return false;
@@ -110,13 +109,20 @@ int main() {
             switch (demandeEntree)
             {
                 case 1:
-                    valid = verifEntry(MESSAGE_ENTREE_ANNEE, MIN_ANNEE, MAX_ANNEE);
+					cout << MESSAGE_ENTREE_ANNEE;
+					cin >> annee;
+                    valid = verifEntry(annee, MIN_ANNEE, MAX_ANNEE);
                     continue;
                 case 2:
-                    valid = verifEntry(MESSAGE_ENTREE_JOUR, JOUR_MINIMUM, NB_JOURS_SEMAINE);
+					cout << MESSAGE_ENTREE_JOUR;
+					cin >> jour;
+                    valid = verifEntry(jour, JOUR_MINIMUM, NB_JOURS_SEMAINE);
                     continue;
             }
         } while (!valid);
     }
+
+	cout << annee << " " << jour;
+
     return 0;
 }
