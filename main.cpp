@@ -36,7 +36,8 @@ int annee = 2015;
 int jour;
 
 void displayOneMonth(int month) {
-    cout << setw(int((21 - MOIS[month].length())/2) + MOIS[month].length()) << MOIS[month] << endl;
+    int x = int((21 - MOIS[month].length())/2) + MOIS[month].length();
+    cout << setw(x) << MOIS[month] << setw(21-x) << endl;
     for (int i = 0; i < NB_JOURS_SEMAINE; i++) {
         cout << setw(3) << JOURS_SEMAINE[i];
     }
@@ -52,7 +53,7 @@ void display() {
     << setw(21) << setfill(' ') << endl;
     for(int i = 0; i < NB_MOIS; i++) {
         displayOneMonth(i);
-        cout << endl;
+        cout << endl << setw(21) << endl;
     }
 }
 int dayOfTheYear(int day, int month, int year) {
@@ -118,5 +119,6 @@ int main() {
             }
         } while (!valid);
     }
+    display();
     return 0;
 }
