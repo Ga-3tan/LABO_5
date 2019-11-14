@@ -37,17 +37,21 @@ int jour;
 
 void displayOneMonth(int month) {
     int x = int((21 - MOIS[month].length())/2) + MOIS[month].length();
+
     cout << setw(x) << MOIS[month] << setw(21-x) << endl;
+
     for (int i = 0; i < NB_JOURS_SEMAINE; i++) {
         cout << setw(3) << JOURS_SEMAINE[i];
     }
+
     for (int k = 0; k < 6; k++) {
         cout << endl;
         for (int j = 0; j < NB_JOURS_SEMAINE; j++) {
-            cout << setw(3) << /*jour*/ "OO";
+			cout << setw(3) << j ;
         }
     }
 }
+
 void display() {
     cout << setw(12) << annee << endl
     << setw(21) << setfill(' ') << endl;
@@ -56,6 +60,7 @@ void display() {
         cout << endl << setw(21) << endl;
     }
 }
+
 int dayOfTheYear(int day, int month, int year) {
     if (month == 1 || month == 2) {
         month += 12;
@@ -81,7 +86,6 @@ void clearCin() {
 
 bool verifEntry(int variable, int valueMin, int valueMax)
 {
-    
     if (cin.fail()) {
         clearCin();
     }
