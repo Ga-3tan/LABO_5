@@ -88,7 +88,7 @@ void displayOneMonth(int month, int nbJourVide) {
 	}
 
 	// affiche le mois
-    cout << setw(center) << MOIS[month] << setw(21-center) << endl;
+	cout << setw(center) << MOIS[month] << setw(21 - center) << setfill(' ') << endl;
 
 	//affiche les jours de la semaine
     for (int i = 1; i <= NB_JOURS_SEMAINE; i++) {
@@ -105,13 +105,13 @@ void displayOneMonth(int month, int nbJourVide) {
 
 	cout << endl;
 
-    for (int j = 0; j < nombreJourDuMois + decalage; j++) {
+    for (int j = 0; j < nombreJourDuMois + decalage + (7 - (nombreJourDuMois + decalage)%7)%7; j++) {
 		if (j != 0 && (j % 7) == 0)
 		{
 			cout << endl;
 		}
 		
-		if (decalage !=7 && j < decalage) {
+		if (decalage !=7 && j < decalage || j>= nombreJourDuMois + decalage) {
 			cout << setw(3) << " ";
 		}else{
 			cout << setw(3) << j - decalage +1;
@@ -133,8 +133,7 @@ int dayOfTheYear(int day, int month, int year) {
 }
 
 void display() {
-    cout << setw(12) << annee << endl
-    << setw(21) << setfill(' ') << endl;
+    cout << setw(12) << annee << setw(12) << endl << setw(21) << setfill(' ') << endl;
 	int premierJourAnnee = dayOfTheYear(1, 1, annee);
     displayOneMonth(0, (premierJourAnnee -2));
 }
@@ -190,7 +189,7 @@ int main() {
             }
         } while (!valid);
     }
-	cout << endl;
+	cout << setw(21)<< setfill(' ') << endl;
     display();
     return 0;
 }
