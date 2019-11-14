@@ -5,7 +5,7 @@
  Date :        12.11.2019
 
  But :         Afficher un calendrier annuaire selon le choix de l'année par l'utilisateur.
-                L'utilisateur peut également choisir un décalage pour afficher le lundi autre part que tout à gauche.
+				L'utilisateur peut également choisir un décalage pour afficher le lundi autre part que tout à gauche.
 
  Remarque(s) :
 
@@ -27,10 +27,10 @@ const int NB_JOURS_SEMAINE = 7;
 const int MIN_ANNEE = 1600;
 const int MAX_ANNEE = 3000;
 
-const char JOURS_SEMAINE[NB_JOURS_SEMAINE] = {'L', 'M', 'M', 'J', 'V', 'S', 'D'};
-const string MOIS[NB_MOIS] = {"Janvier", "Fevrier", "Mars", "Avril",
-                              "Mai", "Juin", "Juillet", "Aout", "Septembre",
-                              "Octobre", "Novembre", "Decembre"};
+const char JOURS_SEMAINE[NB_JOURS_SEMAINE] = { 'L', 'M', 'M', 'J', 'V', 'S', 'D' };
+const string MOIS[NB_MOIS] = { "Janvier", "Fevrier", "Mars", "Avril",
+							  "Mai", "Juin", "Juillet", "Aout", "Septembre",
+							  "Octobre", "Novembre", "Decembre" };
 
 int annee = 2015;
 int jour;
@@ -48,13 +48,13 @@ bool isBis() {
 }
 
 void displayOneMonth(int month, int nbJourVide) {
-	int decalage = (nbJourVide + jour-1) % 7;
+	int decalage = (nbJourVide + jour - 1) % 7;
 	if (decalage < 0)
 	{
-		decalage +=7;
+		decalage += 7;
 	}
-	int nombreJourDuMois = MOIS_31;
-    int center = int((21 - MOIS[month].length())/2) + MOIS[month].length();
+	int nombreJourDuMois;
+	int center = int((21 - MOIS[month].length()) / 2) + MOIS[month].length();
 
 	if (month < 7 && month != 1)
 	{
@@ -78,7 +78,7 @@ void displayOneMonth(int month, int nbJourVide) {
 			nombreJourDuMois = MOIS_31;
 		}
 	}
-	else if(isBis())
+	else if (isBis())
 	{
 		nombreJourDuMois = FEVRIER_BIS;
 	}
@@ -88,39 +88,41 @@ void displayOneMonth(int month, int nbJourVide) {
 	}
 
 	// affiche le mois
-	cout << setw(center) << MOIS[month] << setw(21 - center) << setfill(' ') << endl;
+	cout << setw(center) << MOIS[month] << string(21 - center, ' ') << endl;
 
 	//affiche les jours de la semaine
-    for (int i = 1; i <= NB_JOURS_SEMAINE; i++) {
+	for (int i = 1; i <= NB_JOURS_SEMAINE; i++) {
 		if (i - jour < 0)
 		{
-			cout << setw(3) << JOURS_SEMAINE[i-jour+7];
+			cout << setw(3) << JOURS_SEMAINE[i - jour + 7];
 		}
 		else
 		{
 			cout << setw(3) << JOURS_SEMAINE[i - jour];
 		}
-        
-    }
+
+	}
 
 	cout << endl;
 
-    for (int j = 0; j < nombreJourDuMois + decalage + (7 - (nombreJourDuMois + decalage)%7)%7; j++) {
+	for (int j = 0; j < nombreJourDuMois + decalage + (7 - (nombreJourDuMois + decalage) % 7) % 7; j++) {
 		if (j != 0 && (j % 7) == 0)
 		{
 			cout << endl;
 		}
-		
-		if (decalage !=7 && j < decalage || j>= nombreJourDuMois + decalage) {
+
+		if (decalage != 7 && j < decalage || j >= nombreJourDuMois + decalage) {
 			cout << setw(3) << " ";
-		}else{
-			cout << setw(3) << j - decalage +1;
-		}        
-    }
-	cout << endl << setw(21) << endl;
+		}
+		else {
+			cout << setw(3) << j - decalage + 1;
+		}
+	}
+
 	if (month < 11)
 	{
-		displayOneMonth(month + 1, (nombreJourDuMois + nbJourVide)%7);
+		cout << endl << string(21, ' ') << endl;
+		displayOneMonth(month + 1, (nombreJourDuMois + nbJourVide) % 7);
 	}
 }
 
@@ -133,9 +135,9 @@ int dayOfTheYear(int day, int month, int year) {
 }
 
 void display() {
-    cout << setw(12) << annee << setw(12) << endl << setw(21) << setfill(' ') << endl;
+	cout << setfill(' ') << setw(12) << annee << string(9, ' ') << endl << string(21, ' ') << endl;
 	int premierJourAnnee = dayOfTheYear(1, 1, annee);
-    displayOneMonth(0, (premierJourAnnee -2));
+	displayOneMonth(0, (premierJourAnnee - 2));
 }
 
 
@@ -143,53 +145,53 @@ void display() {
 
 
 void clearCin() {
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+	cin.clear();
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
 bool verifEntry(int variable, int valueMin, int valueMax)
 {
-    if (cin.fail()) {
-        clearCin();
-    }
+	if (cin.fail()) {
+		clearCin();
+	}
 
-    if (variable < valueMin || variable > valueMax) {
-        cout << "Entree non valide" << endl;
-        clearCin();
-        return false;
-    }
-    else {
-        return true;
-    }
+	if (variable < valueMin || variable > valueMax) {
+		cout << "Entree non valide" << endl;
+		clearCin();
+		return false;
+	}
+	else {
+		return true;
+	}
 }
 
 int main() {
-    /////////////////////////////////////// Constantes ////////////////////////////////////////////////
-    const int JOUR_MINIMUM = 1;
-    const string MESSAGE_ENTREE_ANNEE = "Quelle annee voulez-vous afficher? (1600-3000) ";
-    const string MESSAGE_ENTREE_JOUR = "Quel jour de la semaine est le lundi? (1-7) ";
-    /////////////////////////////////////// Variables ////////////////////////////////////////////////
-    bool valid;
-    ///////////////////////////////////////// Code //////////////////////////////////////////////////
-    for (int demandeEntree = 1; demandeEntree <= 2; demandeEntree++)
-    {
-        do {
-            switch (demandeEntree)
-            {
-                case 1:
-					cout << MESSAGE_ENTREE_ANNEE;
-					cin >> annee;
-                    valid = verifEntry(annee, MIN_ANNEE, MAX_ANNEE);
-                    continue;
-                case 2:
-					cout << MESSAGE_ENTREE_JOUR;
-					cin >> jour;
-                    valid = verifEntry(jour, JOUR_MINIMUM, NB_JOURS_SEMAINE);
-                    continue;
-            }
-        } while (!valid);
-    }
-	cout << setw(21)<< setfill(' ') << endl;
-    display();
-    return 0;
+	/////////////////////////////////////// Constantes ////////////////////////////////////////////////
+	const int JOUR_MINIMUM = 1;
+	const string MESSAGE_ENTREE_ANNEE = "Quelle annee voulez-vous afficher? (1600-3000) ";
+	const string MESSAGE_ENTREE_JOUR = "Quel jour de la semaine est le lundi? (1-7) ";
+	/////////////////////////////////////// Variables ////////////////////////////////////////////////
+	bool valid;
+	///////////////////////////////////////// Code //////////////////////////////////////////////////
+	for (int demandeEntree = 1; demandeEntree <= 2; demandeEntree++)
+	{
+		do {
+			switch (demandeEntree)
+			{
+			case 1:
+				cout << MESSAGE_ENTREE_ANNEE;
+				cin >> annee;
+				valid = verifEntry(annee, MIN_ANNEE, MAX_ANNEE);
+				continue;
+			case 2:
+				cout << MESSAGE_ENTREE_JOUR;
+				cin >> jour;
+				valid = verifEntry(jour, JOUR_MINIMUM, NB_JOURS_SEMAINE);
+				continue;
+			}
+		} while (!valid);
+	}
+	cout << endl;
+	display();
+	return 0;
 }
