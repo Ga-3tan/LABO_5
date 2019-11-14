@@ -35,49 +35,109 @@ const string MOIS[NB_MOIS] = {"Janvier", "Fevrier", "Mars", "Avril",
 int annee = 2015;
 int jour;
 
-void displayOneMonth(int month) {
-    int x = int((21 - MOIS[month].length())/2) + MOIS[month].length();
+bool isBis() {
+	if (annee % 4 != 0) {
+		return false;
+	}
+	else if (annee % 100 != 0) {
+		return true;
+	}
+	else {
+		return (annee % 400 == 0);
+	}
+}
 
-    cout << setw(x) << MOIS[month] << setw(21-x) << endl;
+void displayOneMonth(int month, int nbJourVide) {
+	int decalage = (nbJourVide + jour-1) % 7;
+	int nombreJourDuMois = MOIS_31;
+    int center = int((21 - MOIS[month].length())/2) + MOIS[month].length();
 
-    for (int i = 0; i < NB_JOURS_SEMAINE; i++) {
-        cout << setw(3) << JOURS_SEMAINE[i];
+	if (month < 7 && month != 1)
+	{
+		if (month % 2 == 0)
+		{
+			nombreJourDuMois = MOIS_31;
+		}
+		else
+		{
+			nombreJourDuMois = MOIS_30;
+		}
+	}
+	else if (month != 1)
+	{
+		if (month % 2 == 0)
+		{
+			nombreJourDuMois = MOIS_30;
+		}
+		else
+		{
+			nombreJourDuMois = MOIS_31;
+		}
+	}
+	else if(isBis())
+	{
+		nombreJourDuMois = FEVRIER_BIS;
+	}
+	else
+	{
+		nombreJourDuMois = FEVRIER_NON_BIS;
+	}
+
+	// affiche le mois
+    cout << setw(center) << MOIS[month] << setw(21-center) << endl;
+
+	//affiche les jours de la semaine
+    for (int i = 1; i <= NB_JOURS_SEMAINE; i++) {
+		if (i - jour < 0)
+		{
+			cout << setw(3) << JOURS_SEMAINE[i-jour+7];
+		}
+		else
+		{
+			cout << setw(3) << JOURS_SEMAINE[i - jour];
+		}
+        
     }
 
-    for (int k = 0; k < 6; k++) {
-        cout << endl;
-        for (int j = 0; j < NB_JOURS_SEMAINE; j++) {
-			cout << setw(3) << j ;
-        }
+	cout << endl;
+
+    for (int j = 0; j < nombreJourDuMois + decalage; j++) {
+		if (j != 0 && (j % 7) == 0)
+		{
+			cout << endl;
+		}
+		
+		if (decalage !=7 && j < decalage) {
+			cout << setw(3) << " ";
+		}else{
+			cout << setw(3) << j - decalage +1;
+		}        
     }
+	cout << endl << setw(21) << endl;
+	if (month < 11)
+	{
+		displayOneMonth(month + 1, (nombreJourDuMois + nbJourVide)%7);
+	}
+}
+
+int dayOfTheYear(int day, int month, int year) {
+	if (month == 1 || month == 2) {
+		month += 12;
+		--year;
+	}
+	return (day + 2 * month + int(3 * (month + 1) / 5) + year + int(year / 4) - (year / 100) + int(year / 400) + 2) % 7;
 }
 
 void display() {
     cout << setw(12) << annee << endl
     << setw(21) << setfill(' ') << endl;
-    for(int i = 0; i < NB_MOIS; i++) {
-        displayOneMonth(i);
-        cout << endl << setw(21) << endl;
-    }
+	int premierJourAnnee = dayOfTheYear(1, 1, annee);
+    displayOneMonth(0, (premierJourAnnee -2));
 }
 
-int dayOfTheYear(int day, int month, int year) {
-    if (month == 1 || month == 2) {
-        month += 12;
-        --year;
-    }
-    return (day + 2 * month + int(3 * (month + 1) / 5) + year + int(year / 4) - (year / 100) + int(year / 400) + 2) % 7;
-}
 
-bool isBis() {
-    if (annee % 4 != 0) {
-        return false;
-    } else if (annee % 100 != 0) {
-        return true;
-    } else {
-        return (annee % 400 == 0);
-    }
-}
+
+
 
 void clearCin() {
     cin.clear();
