@@ -33,7 +33,7 @@ const string MOIS[NB_MOIS] = { "Janvier", "Fevrier", "Mars", "Avril",
 							  "Octobre", "Novembre", "Decembre" };
 
 int annee = 2015;
-int jour;
+int positionLundi;
 
 bool isBis() {
 	if (annee % 4 != 0) {
@@ -48,7 +48,7 @@ bool isBis() {
 }
 
 void displayOneMonth(int month, int nbJourVide) {
-	int decalage = (nbJourVide + jour - 1) % 7;
+	int decalage = (nbJourVide + positionLundi - 1) % 7;
 	if (decalage < 0)
 	{
 		decalage += 7;
@@ -92,13 +92,13 @@ void displayOneMonth(int month, int nbJourVide) {
 
 	//affiche les jours de la semaine
 	for (int i = 1; i <= NB_JOURS_SEMAINE; i++) {
-		if (i - jour < 0)
+		if (i - positionLundi < 0)
 		{
-			cout << setw(3) << JOURS_SEMAINE[i - jour + 7];
+			cout << setw(3) << JOURS_SEMAINE[i - positionLundi + 7];
 		}
 		else
 		{
-			cout << setw(3) << JOURS_SEMAINE[i - jour];
+			cout << setw(3) << JOURS_SEMAINE[i - positionLundi];
 		}
 
 	}
@@ -169,7 +169,7 @@ int main() {
 	/////////////////////////////////////// Constantes ////////////////////////////////////////////////
 	const int JOUR_MINIMUM = 1;
 	const string MESSAGE_ENTREE_ANNEE = "Quelle annee voulez-vous afficher? (1600-3000) ";
-	const string MESSAGE_ENTREE_JOUR = "Quel jour de la semaine est le lundi? (1-7) ";
+	const string MESSAGE_ENTREE_JOUR = "Quel positionLundi de la semaine est le lundi? (1-7) ";
 	/////////////////////////////////////// Variables ////////////////////////////////////////////////
 	bool valid;
 	///////////////////////////////////////// Code //////////////////////////////////////////////////
@@ -185,8 +185,8 @@ int main() {
 				continue;
 			case 2:
 				cout << MESSAGE_ENTREE_JOUR;
-				cin >> jour;
-				valid = verifEntry(jour, JOUR_MINIMUM, NB_JOURS_SEMAINE);
+				cin >> positionLundi;
+				valid = verifEntry(positionLundi, JOUR_MINIMUM, NB_JOURS_SEMAINE);
 				continue;
 			}
 		} while (!valid);
