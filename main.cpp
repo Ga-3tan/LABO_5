@@ -69,6 +69,39 @@ int nbJourDuMois(int mois, int annee)
 	}
 }
 
+void afficheLesDates(int nombreDeJours, int joursVide) {
+	//												 | ICI = NOMBRE de jour "vide" après le dernier jours du mois
+	for (int j = 0; j < nombreDeJours + joursVide + (7 - (nombreDeJours + joursVide) % 7) % 7; j++) {
+		// Si on a affiché le dernier jours de la semaine faire un retour à la ligne avant d'afficher le suivant
+		if (j != 0 && (j % 7) == 0)
+		{
+			cout << endl;
+		}
+		//Avant le premier et après le dernier jour du mois affiche esapce
+		if (joursVide != 7 && j < joursVide || j >= nombreDeJours + joursVide) {
+			cout << setw(3) << " ";
+		}
+		else {
+			cout << setw(3) << j - joursVide + 1;
+		}
+	}
+}
+
+void afficheLesJours(int NB_JOURS_SEMAINE, int positionLundi, const char JOURS_SEMAINE[]) {
+	//affiche les jours de la semaine
+	for (int i = 1; i <= NB_JOURS_SEMAINE; i++) {
+		if (i - positionLundi < 0)
+		{
+			cout << setw(3) << JOURS_SEMAINE[i - positionLundi + 7];
+		}
+		else
+		{
+			cout << setw(3) << JOURS_SEMAINE[i - positionLundi];
+		}
+
+	}
+}
+
 void recursivDisplayMonth(int month, int nbJourVide, int numberOfMothToDisplay, const string MOIS[], const char JOURS_SEMAINE[], int NB_JOURS_SEMAINE, int annee, int positionLundi) {
 	// Calcul le nombre de jour vide si le nombre de jour vide = 7 alors on met 0 pour eviter la ligne vide
 	int decalage = (nbJourVide + positionLundi - 1) % 7;
@@ -82,36 +115,12 @@ void recursivDisplayMonth(int month, int nbJourVide, int numberOfMothToDisplay, 
 
 	// affiche le mois
 	cout << setw(center) << MOIS[month] << string(21 - center, ' ') << endl;
-
-	//affiche les jours de la semaine
-	for (int i = 1; i <= NB_JOURS_SEMAINE; i++) {
-		if (i - positionLundi < 0)
-		{
-			cout << setw(3) << JOURS_SEMAINE[i - positionLundi + 7];
-		}
-		else
-		{
-			cout << setw(3) << JOURS_SEMAINE[i - positionLundi];
-		}
-
-	}
+	
+	afficheLesJours(NB_JOURS_SEMAINE, positionLundi, JOURS_SEMAINE);
 
 	cout << endl;
-	//												 | ICI = NOMBRE de jour "vide" après le dernier jours du mois
-	for (int j = 0; j < nombreJourDuMois + decalage + (7 - (nombreJourDuMois + decalage) % 7) % 7; j++) {
-		// Si on a affiché le dernier jours de la semaine faire un retour à la ligne avant d'afficher le suivant
-		if (j != 0 && (j % 7) == 0)
-		{
-			cout << endl;
-		}
-		//Avant le premier et après le dernier jour du mois affiche esapce
-		if (decalage != 7 && j < decalage || j >= nombreJourDuMois + decalage) {
-			cout << setw(3) << " ";
-		}
-		else {
-			cout << setw(3) << j - decalage + 1;
-		}
-	}
+
+	afficheLesDates(nombreJourDuMois, decalage);
 
 	// tant qu'on a pas affiché décembre on continue !
 	if (month < numberOfMothToDisplay-1)
@@ -163,7 +172,7 @@ int main() {
 	const int NB_MOIS = 12;
 	const int JOUR_MINIMUM = 1;
 	const string MESSAGE_ENTREE_ANNEE = "Quelle annee voulez-vous afficher? (1600-3000) ";
-	const string MESSAGE_ENTREE_JOUR = "Quel positionLundi de la semaine est le lundi? (1-7) ";
+	const string MESSAGE_ENTREE_JOUR = "Quel jour de la semaine est le lundi? (1-7) ";
 	const string MOIS[NB_MOIS] = { "Janvier", "Fevrier", "Mars", "Avril",
 							  "Mai", "Juin", "Juillet", "Aout", "Septembre",
 							  "Octobre", "Novembre", "Decembre" };
