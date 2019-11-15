@@ -48,7 +48,9 @@ bool isBis() {
 }
 
 void displayOneMonth(int month, int nbJourVide) {
+	// Calcul le nombre de jour vide si le nombre de jour vide = 7 alors on met 0 pour eviter la ligne vide
 	int decalage = (nbJourVide + positionLundi - 1) % 7;
+	//corrige le décalage (je crois il y avait un bug avec l'an 2000 et lundi position 1 ça corrige ce bug
 	if (decalage < 0)
 	{
 		decalage += 7;
@@ -56,6 +58,7 @@ void displayOneMonth(int month, int nbJourVide) {
 	int nombreJourDuMois;
 	int center = int((21 - MOIS[month].length()) / 2) + MOIS[month].length();
 
+	//Sélectionne si le mois fait 30 ou 31 jours et pour février si il fait 28 ou 29
 	if (month < 7 && month != 1)
 	{
 		if (month % 2 == 0)
@@ -104,13 +107,14 @@ void displayOneMonth(int month, int nbJourVide) {
 	}
 
 	cout << endl;
-
+	//												 | ICI = NOMBRE de jour "vide" après le dernier jours du mois
 	for (int j = 0; j < nombreJourDuMois + decalage + (7 - (nombreJourDuMois + decalage) % 7) % 7; j++) {
+		// Si on a affiché le dernier jours de la semaine faire un retour à la ligne avant d'afficher le suivant
 		if (j != 0 && (j % 7) == 0)
 		{
 			cout << endl;
 		}
-
+		//Avant le premier et après le dernier jour du mois affiche esapce
 		if (decalage != 7 && j < decalage || j >= nombreJourDuMois + decalage) {
 			cout << setw(3) << " ";
 		}
@@ -119,6 +123,7 @@ void displayOneMonth(int month, int nbJourVide) {
 		}
 	}
 
+	// tant qu'on a pas affiché décembre on continue !
 	if (month < 11)
 	{
 		cout << endl << string(21, ' ') << endl;
