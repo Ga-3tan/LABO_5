@@ -5,7 +5,7 @@
  Date :         12.11.2019
 
  But :          Afficher un calendrier annuaire selon le choix de l'année par l'utilisateur.
-                L'utilisateur peut également choisir un décalage pour afficher le lundi autre part que tout à gauche.
+				L'utilisateur peut également choisir un décalage pour afficher le lundi autre part que tout à gauche.
 
  Remarque(s) :
 
@@ -60,8 +60,10 @@ int nbJourDuMois(int mois, int annee) {
 	}
 }
 
-void afficheLesDates(int nombreDeJours, int joursVide) {
-	for (int j = 0; j < nombreDeJours + joursVide + (7 /*->NOMBRE de jour "vide" après le dernier jours du mois*/ - (nombreDeJours + joursVide) % 7) % 7; j++) {
+void afficheLesDates(int nombreDeJours, int joursVide)
+
+{
+	for (int j = 0; j < nombreDeJours + joursVide + /*NOMBRE de jour "vide" après le dernier jours du mois ->*/(7 - (nombreDeJours + joursVide) % 7) % 7; j++) {
 		// Si on a affiché le dernier jours de la semaine faire un retour à la ligne avant d'afficher le suivant
 		if (j != 0 && (j % 7) == 0) {
 			cout << endl;
@@ -69,7 +71,8 @@ void afficheLesDates(int nombreDeJours, int joursVide) {
 		//Avant le premier et après le dernier jour du mois affiche esapce
 		if (joursVide != 7 && j < joursVide || j >= nombreDeJours + joursVide) {
 			cout << setw(3) << " ";
-		} else {
+		}
+		else {
 			cout << setw(3) << j - joursVide + 1;
 		}
 	}
@@ -80,7 +83,8 @@ void afficheLesJours(int NB_JOURS_SEMAINE, int positionLundi, const char JOURS_S
 	for (int i = 1; i <= NB_JOURS_SEMAINE; i++) {
 		if (i - positionLundi < 0) {
 			cout << setw(3) << JOURS_SEMAINE[i - positionLundi + 7];
-		} else {
+		}
+		else {
 			cout << setw(3) << JOURS_SEMAINE[i - positionLundi];
 		}
 
@@ -99,7 +103,7 @@ void recursivDisplayMonth(int month, int nbJourVide, int numberOfMothToDisplay, 
 
 	// affiche le mois
 	cout << setw(center) << MOIS[month] << string(21 - center, ' ') << endl;
-	
+
 	afficheLesJours(NB_JOURS_SEMAINE, positionLundi, JOURS_SEMAINE);
 
 	cout << endl;
@@ -107,7 +111,7 @@ void recursivDisplayMonth(int month, int nbJourVide, int numberOfMothToDisplay, 
 	afficheLesDates(nombreJourDuMois, decalage);
 
 	// tant qu'on a pas affiché décembre on continue !
-	if (month < numberOfMothToDisplay-1) {
+	if (month < numberOfMothToDisplay - 1) {
 		cout << endl << string(21, ' ') << endl;
 		recursivDisplayMonth(month + 1, (nombreJourDuMois + nbJourVide) % 7, numberOfMothToDisplay, MOIS, JOURS_SEMAINE, NB_JOURS_SEMAINE, annee, positionLundi);
 	}
@@ -140,7 +144,8 @@ bool verifEntry(int variable, int valueMin, int valueMax) {
 		cout << "Entree non valide" << endl;
 		clearCin();
 		return false;
-	} else {
+	}
+	else {
 		return true;
 	}
 }
