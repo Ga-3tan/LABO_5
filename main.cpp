@@ -1,11 +1,11 @@
 /* ---------------------------
- Laboratoire : 05
- Fichier :     main.cpp
- Auteur(s) :   Samy Ould Ahmed, Gaétan Zwick, Jonathan Stocchetti
- Date :        12.11.2019
+ Laboratoire :  05
+ Fichier :      main.cpp
+ Auteur(s) :    Samy Ould Ahmed, Gaétan Zwick, Jonathan Stocchetti
+ Date :         12.11.2019
 
- But :         Afficher un calendrier annuaire selon le choix de l'année par l'utilisateur.
-				L'utilisateur peut également choisir un décalage pour afficher le lundi autre part que tout à gauche.
+ But :          Afficher un calendrier annuaire selon le choix de l'année par l'utilisateur.
+                L'utilisateur peut également choisir un décalage pour afficher le lundi autre part que tout à gauche.
 
  Remarque(s) :
 
@@ -30,58 +30,46 @@ bool isBis(int annee) {
 	}
 }
 
-int nbJourDuMois(int mois, int annee)
-{
+int nbJourDuMois(int mois, int annee) {
 	const int MOIS_30 = 30;
 	const int MOIS_31 = 31;
 	const int FEVRIER_BIS = 29;
 	const int FEVRIER_NON_BIS = 28;
 	//Sélectionne si le mois fait 30 ou 31 jours et pour février si il fait 28 ou 29
-	if (mois < 7 && mois != 1)
-	{
-		if (mois % 2 == 0)
-		{
+	if (mois < 7 && mois != 1) {
+		if (mois % 2 == 0) {
 			return MOIS_31;
 		}
-		else
-		{
+		else {
 			return MOIS_30;
 		}
 	}
-	else if (mois != 1)
-	{
-		if (mois % 2 == 0)
-		{
+	else if (mois != 1) {
+		if (mois % 2 == 0) {
 			return MOIS_30;
 		}
-		else
-		{
+		else {
 			return MOIS_31;
 		}
 	}
-	else if (isBis(annee))
-	{
+	else if (isBis(annee)) {
 		return FEVRIER_BIS;
 	}
-	else
-	{
+	else {
 		return FEVRIER_NON_BIS;
 	}
 }
 
 void afficheLesDates(int nombreDeJours, int joursVide) {
-	//												 | ICI = NOMBRE de jour "vide" après le dernier jours du mois
-	for (int j = 0; j < nombreDeJours + joursVide + (7 - (nombreDeJours + joursVide) % 7) % 7; j++) {
+	for (int j = 0; j < nombreDeJours + joursVide + (7 /*->NOMBRE de jour "vide" après le dernier jours du mois*/ - (nombreDeJours + joursVide) % 7) % 7; j++) {
 		// Si on a affiché le dernier jours de la semaine faire un retour à la ligne avant d'afficher le suivant
-		if (j != 0 && (j % 7) == 0)
-		{
+		if (j != 0 && (j % 7) == 0) {
 			cout << endl;
 		}
 		//Avant le premier et après le dernier jour du mois affiche esapce
 		if (joursVide != 7 && j < joursVide || j >= nombreDeJours + joursVide) {
 			cout << setw(3) << " ";
-		}
-		else {
+		} else {
 			cout << setw(3) << j - joursVide + 1;
 		}
 	}
@@ -90,12 +78,9 @@ void afficheLesDates(int nombreDeJours, int joursVide) {
 void afficheLesJours(int NB_JOURS_SEMAINE, int positionLundi, const char JOURS_SEMAINE[]) {
 	//affiche les jours de la semaine
 	for (int i = 1; i <= NB_JOURS_SEMAINE; i++) {
-		if (i - positionLundi < 0)
-		{
+		if (i - positionLundi < 0) {
 			cout << setw(3) << JOURS_SEMAINE[i - positionLundi + 7];
-		}
-		else
-		{
+		} else {
 			cout << setw(3) << JOURS_SEMAINE[i - positionLundi];
 		}
 
@@ -106,8 +91,7 @@ void recursivDisplayMonth(int month, int nbJourVide, int numberOfMothToDisplay, 
 	// Calcul le nombre de jour vide si le nombre de jour vide = 7 alors on met 0 pour eviter la ligne vide
 	int decalage = (nbJourVide + positionLundi - 1) % 7;
 	//corrige le décalage (je crois il y avait un bug avec l'an 2000 et lundi position 1 ça corrige ce bug
-	if (decalage < 0)
-	{
+	if (decalage < 0) {
 		decalage += 7;
 	}
 	int nombreJourDuMois = nbJourDuMois(month, annee);
@@ -123,8 +107,7 @@ void recursivDisplayMonth(int month, int nbJourVide, int numberOfMothToDisplay, 
 	afficheLesDates(nombreJourDuMois, decalage);
 
 	// tant qu'on a pas affiché décembre on continue !
-	if (month < numberOfMothToDisplay-1)
-	{
+	if (month < numberOfMothToDisplay-1) {
 		cout << endl << string(21, ' ') << endl;
 		recursivDisplayMonth(month + 1, (nombreJourDuMois + nbJourVide) % 7, numberOfMothToDisplay, MOIS, JOURS_SEMAINE, NB_JOURS_SEMAINE, annee, positionLundi);
 	}
@@ -149,18 +132,15 @@ void clearCin() {
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-bool verifEntry(int variable, int valueMin, int valueMax)
-{
+bool verifEntry(int variable, int valueMin, int valueMax) {
 	if (cin.fail()) {
 		clearCin();
 	}
-
 	if (variable < valueMin || variable > valueMax) {
 		cout << "Entree non valide" << endl;
 		clearCin();
 		return false;
-	}
-	else {
+	} else {
 		return true;
 	}
 }
@@ -183,11 +163,9 @@ int main() {
 	int annee = 0;
 	int positionLundi = 0;
 	///////////////////////////////////////// Code //////////////////////////////////////////////////
-	for (int demandeEntree = 1; demandeEntree <= 2; demandeEntree++)
-	{
+	for (int demandeEntree = 1; demandeEntree <= 2; demandeEntree++) {
 		do {
-			switch (demandeEntree)
-			{
+			switch (demandeEntree) {
 			case 1:
 				cout << MESSAGE_ENTREE_ANNEE;
 				cin >> annee;
