@@ -30,7 +30,7 @@ bool isBis(int annee) {
 	}
 }
 
-int nbJourDuMois(int mois, int annee) {
+int nbJourDuMois(int mois, const int& annee) {
 	const int MOIS_30 = 30;
 	const int MOIS_31 = 31;
 	const int FEVRIER_BIS = 29;
@@ -60,29 +60,11 @@ int nbJourDuMois(int mois, int annee) {
 	}
 }
 
-void afficheLesDates(int nombreDeJours, int joursVide)
-
-{
-	for (int j = 0; j < nombreDeJours + joursVide + /*NOMBRE de jour "vide" après le dernier jours du mois ->*/(7 - (nombreDeJours + joursVide) % 7) % 7; j++) {
-		// Si on a affiché le dernier jours de la semaine faire un retour à la ligne avant d'afficher le suivant
-		if (j != 0 && (j % 7) == 0) {
-			cout << endl;
-		}
-		//Avant le premier et après le dernier jour du mois affiche esapce
-		if (joursVide != 7 && j < joursVide || j >= nombreDeJours + joursVide) {
-			cout << setw(3) << " ";
-		}
-		else {
-			cout << setw(3) << j - joursVide + 1;
-		}
-	}
-}
-
-void afficheLesJours(int NB_JOURS_SEMAINE, int positionLundi, const char JOURS_SEMAINE[]) {
+void afficheLesJours(const int& NB_JOURS_SEMAINE, const int& positionLundi, const char JOURS_SEMAINE[]) {
 	//affiche les jours de la semaine
 	for (int i = 1; i <= NB_JOURS_SEMAINE; i++) {
 		if (i - positionLundi < 0) {
-			cout << setw(3) << JOURS_SEMAINE[i - positionLundi + 7];
+			cout << setw(3) << JOURS_SEMAINE[i - positionLundi + NB_JOURS_SEMAINE];
 		}
 		else {
 			cout << setw(3) << JOURS_SEMAINE[i - positionLundi];
@@ -91,31 +73,48 @@ void afficheLesJours(int NB_JOURS_SEMAINE, int positionLundi, const char JOURS_S
 	}
 }
 
-void recursivDisplayMonth(int month, int nbJourVide, int numberOfMothToDisplay, const string MOIS[], const char JOURS_SEMAINE[], int NB_JOURS_SEMAINE, int annee, int positionLundi) {
-	// Calcul le nombre de jour vide si le nombre de jour vide = 7 alors on met 0 pour eviter la ligne vide
-	int decalage = (nbJourVide + positionLundi - 1) % 7;
+void afficheLesDates(int& nombreDeJours, int& joursVide, const int& NB_JOURS_SEMAINE) {
+	for (int j = 0; j < nombreDeJours + joursVide + /*NOMBRE de jour "vide" après le dernier jours du mois ->*/(NB_JOURS_SEMAINE - (nombreDeJours + joursVide) % NB_JOURS_SEMAINE) % NB_JOURS_SEMAINE; j++) {
+		// Si on a affiché le dernier jours de la semaine faire un retour à la ligne avant d'afficher le suivant
+		if (j != 0 && (j % NB_JOURS_SEMAINE) == 0) {
+			cout << endl;
+		}
+		//Avant le premier et après le dernier jour du mois affiche esapce
+		if (joursVide != NB_JOURS_SEMAINE && j < joursVide || j >= nombreDeJours + joursVide) {
+			cout << setw(3) << " ";
+		}
+		else {
+			cout << setw(3) << j - joursVide + 1;
+		}
+	}
+}
+
+void recursivDisplayMonth(int monthToDisplay, int nbJourVide, int& numberOfMothToDisplay, const string MOIS[], const char JOURS_SEMAINE[], const int& NB_JOURS_SEMAINE, const int& annee, const int& positionLundi) {
+	// Calcul le nombre de jour vide si le nombre de jour vide = NB_JOURS_SEMAINE alors on met 0 pour eviter la ligne vide
+	int decalage = (nbJourVide + positionLundi - 1) % NB_JOURS_SEMAINE;
 	//corrige le décalage (je crois il y avait un bug avec l'an 2000 et lundi position 1 ça corrige ce bug
 	if (decalage < 0) {
-		decalage += 7;
+		decalage += NB_JOURS_SEMAINE;
 	}
-	int nombreJourDuMois = nbJourDuMois(month, annee);
-	int center = int((21 - MOIS[month].length()) / 2) + MOIS[month].length();
+	int nombreJourDuMois = nbJourDuMois(monthToDisplay, annee);
+	int center = int((21 - MOIS[monthToDisplay].length()) / 2) + MOIS[monthToDisplay].length();
 
 	// affiche le mois
-	cout << setw(center) << MOIS[month] << string(21 - center, ' ') << endl;
+	cout << setw(center) << MOIS[monthToDisplay] << string(21 - center, ' ') << endl;
 
 	afficheLesJours(NB_JOURS_SEMAINE, positionLundi, JOURS_SEMAINE);
 
 	cout << endl;
 
-	afficheLesDates(nombreJourDuMois, decalage);
+	afficheLesDates(nombreJourDuMois, decalage, NB_JOURS_SEMAINE);
 
 	// tant qu'on a pas affiché décembre on continue !
-	if (month < numberOfMothToDisplay - 1) {
+	if (monthToDisplay < numberOfMothToDisplay - 1) {
 		cout << endl << string(21, ' ') << endl;
-		recursivDisplayMonth(month + 1, (nombreJourDuMois + nbJourVide) % 7, numberOfMothToDisplay, MOIS, JOURS_SEMAINE, NB_JOURS_SEMAINE, annee, positionLundi);
+		recursivDisplayMonth(monthToDisplay + 1, (nombreJourDuMois + nbJourVide) % NB_JOURS_SEMAINE, numberOfMothToDisplay, MOIS, JOURS_SEMAINE, NB_JOURS_SEMAINE, annee, positionLundi);
 	}
 }
+
 
 int dayOfTheYear(int day, int month, int year) {
 	if (month == 1 || month == 2) {
@@ -125,7 +124,7 @@ int dayOfTheYear(int day, int month, int year) {
 	return (day + 2 * month + int(3 * (month + 1) / 5) + year + int(year / 4) - (year / 100) + int(year / 400) + 2) % 7;
 }
 
-void display(int numberOfMothToDisplay, const string MOIS[], const char JOURS_SEMAINE[], int NB_JOURS_SEMAINE, int annee, int positionLundi) {
+void display(int numberOfMothToDisplay, const string MOIS[], const char JOURS_SEMAINE[], const int& NB_JOURS_SEMAINE, const int annee, const int& positionLundi) {
 	cout << setfill(' ') << setw(12) << annee << string(9, ' ') << endl << string(21, ' ') << endl;
 	int premierJourAnnee = dayOfTheYear(1, 1, annee);
 	recursivDisplayMonth(0, (premierJourAnnee - 2), numberOfMothToDisplay, MOIS, JOURS_SEMAINE, NB_JOURS_SEMAINE, annee, positionLundi);
@@ -136,18 +135,24 @@ void clearCin() {
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-bool verifEntry(int variable, int valueMin, int valueMax) {
-	if (cin.fail()) {
-		clearCin();
-	}
-	if (variable < valueMin || variable > valueMax) {
-		cout << "Entree non valide" << endl;
-		clearCin();
-		return false;
-	}
-	else {
-		return true;
-	}
+int verifEntry(const int& VALUE_MIN, const int& VALUE_MAX, const string& MESSAGE_TO_DISPLAY) {
+	bool test = false;
+	int variable = 0;
+	do {
+		cout << MESSAGE_TO_DISPLAY;
+		cin >> variable;
+		if (cin.fail()) {
+			clearCin();
+		}
+		if (variable < VALUE_MIN || variable > VALUE_MAX) {
+			std::cout << "Entree non valide" << endl;
+			clearCin();
+		}
+		else {
+			test = true;
+		}
+	} while (!test);
+	return variable;
 }
 
 int main() {
@@ -163,27 +168,11 @@ int main() {
 							  "Octobre", "Novembre", "Decembre" };
 	const int NB_JOURS_SEMAINE = 7;
 	const char JOURS_SEMAINE[NB_JOURS_SEMAINE] = { 'L', 'M', 'M', 'J', 'V', 'S', 'D' };
-	/////////////////////////////////////// Variables ////////////////////////////////////////////////
-	bool valid;
-	int annee = 0;
-	int positionLundi = 0;
 	///////////////////////////////////////// Code //////////////////////////////////////////////////
-	for (int demandeEntree = 1; demandeEntree <= 2; demandeEntree++) {
-		do {
-			switch (demandeEntree) {
-			case 1:
-				cout << MESSAGE_ENTREE_ANNEE;
-				cin >> annee;
-				valid = verifEntry(annee, MIN_ANNEE, MAX_ANNEE);
-				continue;
-			case 2:
-				cout << MESSAGE_ENTREE_JOUR;
-				cin >> positionLundi;
-				valid = verifEntry(positionLundi, JOUR_MINIMUM, NB_JOURS_SEMAINE);
-				continue;
-			}
-		} while (!valid);
-	}
+
+	int annee = verifEntry(MIN_ANNEE, MAX_ANNEE, MESSAGE_ENTREE_ANNEE);
+	int positionLundi = verifEntry(JOUR_MINIMUM, NB_JOURS_SEMAINE, MESSAGE_ENTREE_JOUR);
+
 	cout << endl;
 	display(NB_MOIS, MOIS, JOURS_SEMAINE, NB_JOURS_SEMAINE, annee, positionLundi);
 	return 0;
