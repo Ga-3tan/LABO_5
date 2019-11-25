@@ -17,14 +17,17 @@
 	using namespace std;
 
 /**
- * Savoir si l'année séléctionnée est bissextile
+ * \name isBis
  *
- * @param annee, entier entre 1600-3000
+ * \brief Savoir si l'année séléctionnée est bissextile
  *
- * @return true/false si l'annee est bissextile ou pas
+ * \param @param annee, entier entre 1600-3000
+ *
+ * \param @return true/false si l'annee est bissextile ou pas
  */
 	bool isBis(int annee) {
-	    // Formules permettant de savoir si une année est bissextile ou non
+    ///////////////////////////////////////// Code //////////////////////////////////////////////////
+	    /// Formules permettant de savoir si une année est bissextile ou non
 		if (annee % 4 != 0) {
 			return false;
 		}
@@ -37,20 +40,24 @@
 	}
 
 /**
-* Connaitre le nombre de jour dans un mois
+* \name nbJourDuMois
 *
-* @param mois, entier représentant le mois entre 1-12
-* @param annee, entier représentant l'année séléctionnée entre 1600-3000
+* \brief Connaitre le nombre de jour dans un mois
 *
-* @return MOIS_30/MOIS_31/FEVRIER_BIS/FEVRIER_NON_BIS le nombre de jour constituant 1 mois en particulier
+* \param @param mois, entier représentant le mois entre 1-12
+* \param @param annee, entier représentant l'année séléctionnée entre 1600-3000
+*
+* \return @return MOIS_30/MOIS_31/FEVRIER_BIS/FEVRIER_NON_BIS le nombre de jour constituant 1 mois en particulier
 */
 	int nbJourDuMois(int mois, int annee) {
+    /////////////////////////////////////// Constante ////////////////////////////////////////////////
 		const int MOIS_30 = 30;
 		const int MOIS_31 = 31;
 		const int FEVRIER_BIS = 29;
 		const int FEVRIER_NON_BIS = 28;
 
-		//Sélectionne si le mois fait 30 ou 31 jours et pour février si il fait 28 ou 29
+    ///////////////////////////////////////// Code //////////////////////////////////////////////////
+		///Sélectionne si le mois fait 30 ou 31 jours et pour février si il fait 28 ou 29
 		if (mois < 7 && mois != 1) {
 			if (mois % 2 == 0) {
 				return MOIS_31;
@@ -76,15 +83,20 @@
 	}
 
 /**
-* Affiche les jours de la semaine selon la position du lundi
+* \name afficheLesJours
 *
-* @param nbJoursSemaine, entier qui indique le nombre de jours contenu dans une semaine
-* @param positionLundi, entier qui indique la position du lundi dans les jours de la semaine ( display : L M M J V S D, ou S D L M M J V)
+* \brief Affiche les jours de la semaine selon la position du lundi
+*
+* \param @param nbJoursSemaine, entier qui indique le nombre de jours contenu dans une semaine
+* \param @param positionLundi, entier qui indique la position du lundi dans les jours de la semaine ( display : L M M J V S D, ou S D L M M J V)
 *
 */
 	void afficheLesJours(int nbJoursSemaine, int positionLundi) {
+    /////////////////////////////////////// Variable ////////////////////////////////////////////////
 		static const char JOURS_SEMAINE[7] = { 'L', 'M', 'M', 'J', 'V', 'S', 'D' };
-		//affiche les jours de la semaine
+
+    ///////////////////////////////////////// Code //////////////////////////////////////////////////
+		///affiche les jours de la semaine
 		for (int i = 1; i <= nbJoursSemaine; i++) {
 			if (i - positionLundi < 0) {
 				cout << setw(3) << JOURS_SEMAINE[i - positionLundi + nbJoursSemaine];
@@ -97,20 +109,24 @@
 	}
 
 /**
-* Affiche les différentes dates du mois
+* \name afficheLesDates
 *
-* @param nombreDeJours, entier qui indique le nombre de jours dans 1 mois en particulier
-* @param joursVide, entier représentant combien il y a de jours de la semaine "vides" après le 31 (Si le 31 est un jeudi, le vendredi, samedi et dimanche sont "vides" => joursVide=3)
-* @param nbJoursSemaine, entier qui indique le nombre de jours contenu dans une semaine
+* \brief Affiche les différentes dates du mois
+*
+* \param @param nombreDeJours, entier qui indique le nombre de jours dans 1 mois en particulier
+* \param @param joursVide, entier représentant combien il y a de jours de la semaine "vides" après le 31 (Si le 31 est un jeudi, le vendredi, samedi et dimanche sont "vides" => joursVide=3)
+* \param @param nbJoursSemaine, entier qui indique le nombre de jours contenu dans une semaine
 *
 */
 	void afficheLesDates(int nombreDeJours, int joursVide, int nbJoursSemaine) {
-		for (int j = 0; j < nombreDeJours + joursVide + /*NOMBRE de jour "vide" après le dernier jours du mois ->*/(nbJoursSemaine - (nombreDeJours + joursVide) % nbJoursSemaine) % nbJoursSemaine; j++) {
-			// Si on a affiché le dernier jours de la semaine faire un retour à la ligne avant d'afficher le suivant
+    ///////////////////////////////////////// Code //////////////////////////////////////////////////
+    ///NOMBRE de jour "vide" après le dernier jours du mois ->*/(nbJoursSemaine - (nombreDeJours + joursVide) % nbJoursSemaine) % nbJoursSemaine
+	    for (int j = 0; j < nombreDeJours + joursVide + (nbJoursSemaine - (nombreDeJours + joursVide) % nbJoursSemaine) % nbJoursSemaine; j++) {
+			/// Si on a affiché le dernier jours de la semaine faire un retour à la ligne avant d'afficher le suivant
 			if (j != 0 && (j % nbJoursSemaine) == 0) {
 				cout << endl;
 			}
-			//Avant le premier et après le dernier jour du mois affiche espace
+			///Avant le premier et après le dernier jour du mois affiche espace
 			if (joursVide != nbJoursSemaine && j < joursVide || j >= nombreDeJours + joursVide) {
 				cout << setw(3) << " ";
 			}
@@ -121,31 +137,35 @@
 	}
 
 /**
-* FONCTION RECURSIVE
-* Affiche les 12 mois du calendrier avec les jours, les jours de la semaine, etc...
+* \name recursivDisplayMonth
+* \brief FONCTION RECURSIVE
+* \brief Affiche les 12 mois du calendrier avec les jours, les jours de la semaine, etc...
 *
-* @param nbJourVide, entier représentant le mois entre 1-12
-* @param annee, entier représentant l'année séléctionnée entre 1600-3000
-* @param positionLundi, entier qui indique la position du lundi dans les jours de la semaine ( display : L M M J V S D, ou S D L M M J V)
-* @param monthToDisplay, entier du mois à afficher, s'incrémente avec la récursivité
-* @param nbJoursSemaine, entier qui indique le nombre de jours contenu dans une semaine
-* @param numberOfMothToDisplay, entier qui indique combien de mois il faut afficher
+* \param @param nbJourVide, entier représentant le mois entre 1-12
+* \param @param annee, entier représentant l'année séléctionnée entre 1600-3000
+* \param @param positionLundi, entier qui indique la position du lundi dans les jours de la semaine ( display : L M M J V S D, ou S D L M M J V)
+* \param @param monthToDisplay, entier du mois à afficher, s'incrémente avec la récursivité
+* \param @param nbJoursSemaine, entier qui indique le nombre de jours contenu dans une semaine
+* \param @param numberOfMothToDisplay, entier qui indique combien de mois il faut afficher
 *
 */
 	void recursivDisplayMonth(int nbJourVide, int annee, int positionLundi, int monthToDisplay = 0 , int nbJoursSemaine = 7, int numberOfMothToDisplay = 12) {
-		static const string MOIS[12] = { "Janvier", "Fevrier", "Mars", "Avril",
+    /////////////////////////////////////// Variable ////////////////////////////////////////////////
+	    static const string MOIS[12] = { "Janvier", "Fevrier", "Mars", "Avril",
 								  "Mai", "Juin", "Juillet", "Aout", "Septembre",
 								  "Octobre", "Novembre", "Decembre" };
-		// Calcul le nombre de jour vide si le nombre de jour vide = nbJoursSemaine alors on met 0 pour eviter la ligne vide
+
+    //////////////////////////////////////// Code //////////////////////////////////////////////////
+		/// Calcul le nombre de jour vide si le nombre de jour vide = nbJoursSemaine alors on met 0 pour eviter la ligne vide
 		int decalage = (nbJourVide + positionLundi - 3) % nbJoursSemaine;
-		//corrige le décalage (je crois il y avait un bug avec l'an 2000 et lundi position 1 ça corrige ce bug
+		///corrige le décalage (je crois il y avait un bug avec l'an 2000 et lundi position 1 ça corrige ce bug
 		if (decalage < 0) {
 			decalage += nbJoursSemaine;
 		}
 		int nombreJourDuMois = nbJourDuMois(monthToDisplay, annee);
 		int center = int((21 - MOIS[monthToDisplay].length()) / 2) + MOIS[monthToDisplay].length();
 
-		// affiche le mois
+		/// affiche le mois
 		cout << setw(center) << MOIS[monthToDisplay] << string(21 - center, ' ') << endl;
 
 		afficheLesJours(nbJoursSemaine, positionLundi);
@@ -154,7 +174,7 @@
 
 		afficheLesDates(nombreJourDuMois, decalage, nbJoursSemaine);
 
-		// tant qu'on a pas affiché décembre on continue !
+		/// tant qu'on a pas affiché décembre on continue !
 		if (monthToDisplay < numberOfMothToDisplay - 1) {
 			cout << endl << string(21, ' ') << endl;
 			recursivDisplayMonth(((nombreJourDuMois + nbJourVide) % nbJoursSemaine), annee, positionLundi, (monthToDisplay + 1), nbJoursSemaine, numberOfMothToDisplay);
@@ -162,15 +182,18 @@
 	}
 
 /**
-* Connaitre le jour de la semaine du premier jour de l'année (le 1er janvier)
+* \name dayOfTheMonth
 *
-* @param day, entier la date du jour
-* @param month, entier représentant le mois entre 1-12
-* @param year, entier représentant l'année séléctionnée entre 1600-3000
+* \brief Connaitre le jour de la semaine du premier jour de l'année (le 1er janvier)
 *
-* @return le nombre de la date du premier jour de l'année séléctionnée (le 01 janvier de l'année)
+* \param @param day, entier la date du jour
+* \param @param month, entier représentant le mois entre 1-12
+* \param @param year, entier représentant l'année séléctionnée entre 1600-3000
+*
+* \return @return le nombre de la date du premier jour de l'année séléctionnée (le 01 janvier de l'année)
 */
 	int dayOfTheMonth(int day, int month, int year) {
+    ///////////////////////////////////////// Code //////////////////////////////////////////////////
 		if (month == 1 || month == 2) {
 			month += 12;
 			--year;
@@ -179,39 +202,47 @@
 	}
 
 /**
-* Affiche le calandrier en appelant les différentes fonctions d'affichage
+* \name display
+* \brief Affiche le calandrier en appelant les différentes fonctions d'affichage
 *
-* @param annee, entier représentant l'année séléctionnée entre 1600-3000
-* @param positionLundi, entier qui indique la position du lundi dans les jours de la semaine ( display : L M M J V S D, ou S D L M M J V)
-* @param firstMonthToDisplay, le mois à afficher
+* \param @param annee, entier représentant l'année séléctionnée entre 1600-3000
+* \param @param positionLundi, entier qui indique la position du lundi dans les jours de la semaine ( display : L M M J V S D, ou S D L M M J V)
+* \param @param firstMonthToDisplay, le mois à afficher
 *
 */
 	void display(const int annee, int positionLundi, int firstMonthToDisplay = 1) {
+    ///////////////////////////////////////// Code //////////////////////////////////////////////////
 		cout << setfill(' ') << setw(12) << annee << string(9, ' ') << endl << string(21, ' ') << endl;
 		int firstDayMonth = dayOfTheMonth(1, firstMonthToDisplay, annee);
 		recursivDisplayMonth(firstDayMonth, annee, positionLundi);
 	}
 
 /**
-* Nettoie le buffer au cas d'une erreur de l'utilisateur
+* \name clearCin
+* \brief Nettoie le buffer au cas d'une erreur de l'utilisateur
 *
 */
 	void clearCin() {
+    ///////////////////////////////////////// Code //////////////////////////////////////////////////
 		cin.clear();
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	}
 
 /**
-* Vérifie la validité des entrées de l'utilisateur
+* \name verifEntry
+* \brief Vérifie la validité des entrées de l'utilisateur
 *
-* @param VALUE_MIN, entier minimum que l'utilisateur peut entrer
-* @param VALUE_MAX, entier maximum que l'utilisateur peut entrer
-* @param MESSSAGE_TO_DISPLAY, string du message à afficher
+* \param @param VALUE_MIN, entier minimum que l'utilisateur peut entrer
+* \param @param VALUE_MAX, entier maximum que l'utilisateur peut entrer
+* \param @param MESSSAGE_TO_DISPLAY, string du message à afficher
 *
 */
 	int verifEntry(int VALUE_MIN, int VALUE_MAX, const string& MESSAGE_TO_DISPLAY) {
+    /////////////////////////////////////// Variable ////////////////////////////////////////////////
 		bool test = false;
 		int variable = 0;
+
+    ///////////////////////////////////////// Code //////////////////////////////////////////////////
 		do {
 			cout << MESSAGE_TO_DISPLAY;
 			cin >> variable;
@@ -230,9 +261,10 @@
 	}
 
 /**
-* Programme affichant le calendrier d'une année saisie par l'utilisateur
+* \name main
+* \brief Programme affichant le calendrier d'une année saisie par l'utilisateur
 *
-* @return EXIT_SUCCESS
+* \return @return EXIT_SUCCESS
 */
 	int main() {
 		/////////////////////////////////////// Constantes ////////////////////////////////////////////////
